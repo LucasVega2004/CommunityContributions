@@ -96,13 +96,13 @@ Route::get('/fechaCompact', function () {
 });
 
 Route::get('/fechaWith', function () {
-    // Obtén la fecha actual usando la función date() de PHP
+   
     $fechaActual = date('Y-m-d');
 
-    // Divide la fecha en componentes de día, mes y año
+    
     list($anio, $mes, $dia) = explode('-', $fechaActual);
 
-    // Pasa los datos a la vista "fecha.blade.php" utilizando compact
+    
     return view('fecha') -> with('dia',$dia)->with('mes',$mes)->with('anio',$anio); //tienen que llamarse igual
 });
 
