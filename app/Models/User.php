@@ -22,11 +22,7 @@ class User extends Authenticatable implements MustVerifyEmail
         'user_id',
         'name',
         'email',
-        'password',
-        'channel_id',
-        'title',
-        'link',
-        'approved'
+        'password'
     ];
 
     /**

@@ -96,14 +96,14 @@ Route::get('/fechaCompact', function () {
 });
 
 Route::get('/fechaWith', function () {
-   
+
     $fechaActual = date('Y-m-d');
 
-    
+
     list($anio, $mes, $dia) = explode('-', $fechaActual);
 
-    
-    return view('fecha') -> with('dia',$dia)->with('mes',$mes)->with('anio',$anio); //tienen que llamarse igual
+
+    return view('fecha')->with('dia', $dia)->with('mes', $mes)->with('anio', $anio); //tienen que llamarse igual
 });
 
 Route::get('/imagen', function () {
@@ -112,4 +112,10 @@ Route::get('/imagen', function () {
 
 Route::get('community', [App\Http\Controllers\CommunityLinkController::class, 'index']);
 
-Route::post('community', [App\Http\Controllers\CommunityLinkController::class, 'store']);
+Route::post('community', [App\Http\Controllers\CommunityLinkController::class, 'store'])
+    ->middleware('auth');
+
+Route::get('/returnresponse', function () {
+    return response('Error', 404)
+        ->header('Content-Type', 'text/plain');
+});
