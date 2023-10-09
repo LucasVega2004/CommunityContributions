@@ -19,7 +19,7 @@ class CommunityLinkController extends Controller
         $channels = Channel::orderBy('title', 'asc')->get();
 
         // dd($links);
-        return view('community/index', compact('links'));
+        return view('community/index', compact('links', 'channels'));
     }
 
     /**
