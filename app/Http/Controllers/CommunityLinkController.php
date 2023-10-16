@@ -6,6 +6,7 @@ use App\Models\CommunityLink;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Channel;
+use App\Http\Requests\CommunityLinkForm;
 
 
 class CommunityLinkController extends Controller
@@ -15,7 +16,9 @@ class CommunityLinkController extends Controller
      */
     public function index()
     {
-        $links = CommunityLink::paginate(25);
+        // $links = CommunityLink::paginate(25);
+        $links = CommunityLink::where('approved', 0)->latest('updated_at')->paginate(25);
+        // dd($links); 
         $channels = Channel::orderBy('title', 'asc')->get();
 
         // dd($links);
@@ -33,29 +36,48 @@ class CommunityLinkController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(CommunityLinkForm $request)
     {
-
-        dd($request);
-        $data = $request->validate([
-
-            'title' => 'required|max:255',
-
-            'link' => 'required|unique:community_links|url|max:255',
-
-            'channel_id' => 'required|exists:channels,id'
-
-
-        ]);
-
+       
+        $data = $request->validated();
+        $approved = Auth::user()->isTrusted();
         $data['user_id'] = Auth::id();
+        $data['approved'] = $approved;
+        $link = new CommunityLink();
+        $link->user_id = Auth::id();
+
 
         // $data['channel_id'] = 1;
+        // dd($data);
+        // CommunityLink::create($data);
+        // return back()->with('success', 'Item created successfully!');
 
-        CommunityLink::create($data);
 
-        return back();
+        if (CommunityLink::hasAlreadyBeenSubmitted($data['link'])) {
+
+            if ($approved == false) {
+                return back()->with('info', 'El enlace ya está publicado y aprobado pero usted es un usuario no verificado, por lo que no se actualizará en la lista');
+            }
+            if ($approved == true) {
+                return back()->with('success', 'link actualizado correctamente!');
+            } else {
+                return back()->with('info', 'object successfully updated, waiting for a moderator to accept it');
+            }
+        } else {
+            CommunityLink::create($data);
+            if ($approved == true) {
+                return back()->with('success', 'link created successfully!');
+            } else {
+                return back()->with('info', 'object successfully created, waiting for a moderator to accept it');
+            }
+        }
+
+        // return back();
     }
+
+
+
+
     /**
      * Display the specified resource.
      */
