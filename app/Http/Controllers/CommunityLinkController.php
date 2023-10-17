@@ -38,7 +38,7 @@ class CommunityLinkController extends Controller
      */
     public function store(CommunityLinkForm $request)
     {
-       
+
         $data = $request->validated();
         $approved = Auth::user()->isTrusted();
         $data['user_id'] = Auth::id();
@@ -47,13 +47,14 @@ class CommunityLinkController extends Controller
         $link->user_id = Auth::id();
 
 
+
         // $data['channel_id'] = 1;
         // dd($data);
         // CommunityLink::create($data);
         // return back()->with('success', 'Item created successfully!');
 
 
-        if (CommunityLink::hasAlreadyBeenSubmitted($data['link'])) {
+        if ($link->hasAlreadyBeenSubmitted($data['link'])) {
 
             if ($approved == false) {
                 return back()->with('info', 'El enlace ya está publicado y aprobado pero usted es un usuario no verificado, por lo que no se actualizará en la lista');
