@@ -13,5 +13,5 @@ jobs:
               host: 46.183.114.81
               port: 2222
               username: lucas
-              keys: ${{secrets.PRIVATE_KEY}}
+              key: ${{secrets.PRIVATE_KEY}}
               script: "cd /var/www/html/CommunityContributions; git pull origin main; npm run build"
