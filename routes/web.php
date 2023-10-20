@@ -119,3 +119,4 @@ Route::get('/returnresponse', function () {
     return response('Error', 404)
         ->header('Content-Type', 'text/plain');
 });
+Route::get('community/{channel:slug}', [App\Http\Controllers\CommunityLinkController::class, 'index']);

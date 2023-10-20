@@ -1,22 +1,30 @@
-#linkli{
+#linkli {
     list-style: none;
     background-color: rgba(34, 123, 200, 0.1);
     margin-bottom: 5px;
     height: 30px;
     padding-top: 5px;
 }
-#linkli:hover{
+
+#linkli:hover {
     background-color: aquamarine;
     height: 50px;
     font-size: 18;
 }
-a{
+
+a {
     padding-left: 5px;
 }
-small{
+
+small {
     padding-left: 5px;
 }
-span{
+
+span {
     border-radius: 5px;
     padding: 1px;
+}
+
+a{
+    text-decoration: none;
 }
