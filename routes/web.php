@@ -1,7 +1,9 @@
 <?php
 
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
+use App\Models\User;
 
 /*
 |--------------------------------------------------------------------------
@@ -120,3 +122,78 @@ Route::get('/returnresponse', function () {
         ->header('Content-Type', 'text/plain');
 });
 Route::get('community/{channel:slug}', [App\Http\Controllers\CommunityLinkController::class, 'index']);
+
+Route::get('/consultas1', function () {
+    $usuarios = DB::table('users')
+        ->where('name', 'like', '%Fer%')
+        ->get();
+
+
+    return $usuarios;
+});
+
+Route::get('/consultas2', function () {
+    $usuarios = DB::table('users')
+        ->where([
+            ['email', 'like', '%laravel%.com'],
+        ])
+        ->get();
+
+    return $usuarios;
+});
+
+
+Route::get('/consultas3', function () {
+    $usuarios = DB::table('users')
+        ->where('email', 'like', '%laravel%')
+        ->orWhere('email', 'like', '%com%')
+        ->get();
+
+    return $usuarios;
+});
+
+Route::get('/consultas4', function () {
+    DB::table('users')->insert([
+        'name' => 'insert usuarioa-',
+        'email' => 'insert@gmaila.com',
+        'password' => 'contraseñaa'
+    ]);
+
+    return 'Usuario insertado correctamente.';
+});
+
+Route::get('/consultas5', function () {
+    DB::table('users')->insert([
+        ['name' => 'Usuario 1', 'email' => 'usuario1@ejemplo.com', 'password' => 'contra'],
+        ['name' => 'Usuario 2', 'email' => 'usuario2@ejemplo.com', 'password' => 'contra'],
+    ]);
+
+    return 'Dos usuarios insertados correctamente.';
+});
+
+Route::get('/consultas6', function () {
+    $id = DB::table('users')->insertGetId([
+        'name' => 'inserta id',
+        'email' => 'insertiad@gmail.com',
+        'password' => 'contra',
+
+    ]);
+
+    return 'Usuario insertado con ID: ' . $id;
+}); 
+Route::get('/consultas7', function () {
+    $affected = DB::table('users')
+        ->where('id', 2)
+        ->update(['email' => 'updateemail@gmail.com']);
+
+    return 'Registros actualizados: ' . $affected;
+});
+
+
+Route::get('/consultas8', function () {
+    $deleted = DB::table('users')
+        ->where('id', 3)
+        ->delete();
+
+    return 'Registros eliminados: ' . $deleted;
+});
