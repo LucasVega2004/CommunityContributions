@@ -18,9 +18,9 @@ class CommunityLinkController extends Controller
     {
         // Si se proporciona un canal en la URL, filtra los enlaces por ese canal; de lo contrario, muestra todos los canales.
         if ($channel) {
-            $links = CommunityLink::where('channel_id', $channel->id)->where('approved', 0)->latest('updated_at')->paginate(25);
+            $links = CommunityLink::where('channel_id', $channel->id)->where('approved', 1)->latest('updated_at')->paginate(25);
         } else {
-            $links = CommunityLink::where('approved', 0)->latest('updated_at')->paginate(25);
+            $links = CommunityLink::where('approved', 1)->latest('updated_at')->paginate(25);
         }
 
         // Obtenemos la lista de todos los canales

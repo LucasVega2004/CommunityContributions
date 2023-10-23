@@ -19,6 +19,11 @@ class CommunityLink extends Model
         'link',
         'approved'
     ];
+    
+    public function users()
+    {
+        return $this->belongsToMany(User::class, 'community_link_users');
+    }
 
     public function creator()
     {
