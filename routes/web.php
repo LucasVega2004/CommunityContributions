@@ -19,7 +19,7 @@ Route::get('/', function () {
 });
 Auth::routes(['verify' => 'true']);
 
-Route::get('/DPL', function () {
+Route::get('/dpl', function () {
 
     dd(opcache_get_status());
    
@@ -28,6 +28,7 @@ Route::get('/DPL', function () {
    });
    
 
+ 
 
 Route::get('/home', function () {
     return view('home');
