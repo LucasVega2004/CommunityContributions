@@ -19,7 +19,14 @@ Route::get('/', function () {
 });
 Auth::routes(['verify' => 'true']);
 
+Route::get('/DPL', function () {
 
+    dd(opcache_get_status());
+   
+    return view('welcome');
+   
+   });
+   
 
 
 Route::get('/home', function () {
