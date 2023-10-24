@@ -14,4 +14,4 @@ jobs:
               port: 2222
               username: lucas
               key: ${{secrets.PRIVATE_KEY}}
-              script: "cd /var/www/html/CommunityContributions; git pull origin main; npm run build"
+              script: "cd /var/www/html/CommunityContributions; git pull origin main; npm run build; sudo service php8.2-fpm reload; sudo service php8.2-fpm restart"
