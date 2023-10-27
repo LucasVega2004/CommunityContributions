@@ -32,10 +32,19 @@
                             </a>
                             <small>Contributed by: {{ $link->creator->name }}
                                 {{ $link->updated_at->diffForHumans() }}</small>
-                                {{$link->users()->count()}} 
+                            {{ $link->users()->count() }}
 
                         </li>
+                        <form method="POST" action="/votes/{{ $link->id }}">
+                            {{ csrf_field() }}
+                            <button type="submit"
+                                class="btn btn-secondary {{ Auth::check() && Auth::user()->votedFor($link) ? 'btn-success' : 'btn-secondary' }}"
+                                {{ Auth::guest() ? 'disabled' : '' }}>
+                                {{ $link->users()->count() }}
+                            </button>
+                        </form>
                     @endforeach
+
                 </div>
             @else
                 <div class="col-md-8">

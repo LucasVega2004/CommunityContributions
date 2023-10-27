@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -22,109 +23,110 @@ Auth::routes(['verify' => 'true']);
 Route::get('/dpl', function () {
 
     dd(opcache_get_status());
-   
-    return view('welcome');
-   
-   });
-   
 
- 
+    return view('welcome');
+});
+
+
+
 
 Route::get('/home', function () {
     return view('home');
 })->middleware(['auth', 'verified'])->name('home');
 
-Route::get('/user/{name?}', function (?string $name = "There is no name selected") {
-    return $name;
-});
+// Route::get('/user/{name?}', function (?string $name = "There is no name selected") {
+//     return $name;
+// });
 
-Route::post('/userPost', function (?string $name = "There is no name selected") {
-    return 'Ruta Post';
-});
+// Route::post('/userPost', function (?string $name = "There is no name selected") {
+//     return 'Ruta Post';
+// });
 
-Route::match(['get', 'post'], '/getpost/{name?}', function (?string $name = "There is no name selected") {
-    return $name;
-});
+// Route::match(['get', 'post'], '/getpost/{name?}', function (?string $name = "There is no name selected") {
+//     return $name;
+// });
 
-Route::get('/numero/{parametro}', function ($parametro) {
-    if (is_numeric($parametro)) {
-        return "El parámetro es numérico: " . $parametro;
-    } else {
-        return "El parámetro no es numérico";
-    }
-});
+// Route::get('/numero/{parametro}', function ($parametro) {
+//     if (is_numeric($parametro)) {
+//         return "El parámetro es numérico: " . $parametro;
+//     } else {
+//         return "El parámetro no es numérico";
+//     }
+// });
 
-Route::get('/doble/{letras?}/{numeros?}', function ($letras, $numeros) {
-    if (is_numeric($numeros) && ctype_alpha($letras)) {
-        return "El primer parametro son solo letras y el segundo solo numeros";
-    } else {
-        return "No cumple los requisitos";
-    }
-});
+// Route::get('/doble/{letras?}/{numeros?}', function ($letras, $numeros) {
+//     if (is_numeric($numeros) && ctype_alpha($letras)) {
+//         return "El primer parametro son solo letras y el segundo solo numeros";
+//     } else {
+//         return "No cumple los requisitos";
+//     }
+// });
 
-Route::get('/host', function () {
-    $dbHost = env('DB_HOST');
-    return "La dirección IP de la base de datos es: " . $dbHost;
-});
+// Route::get('/host', function () {
+//     $dbHost = env('DB_HOST');
+//     return "La dirección IP de la base de datos es: " . $dbHost;
+// });
 
-Route::get('/timezone', function () {
-    $timezone = config('app.timezone');
-    return "La zona horaria configurada es: " . $timezone;
-});
+// Route::get('/timezone', function () {
+//     $timezone = config('app.timezone');
+//     return "La zona horaria configurada es: " . $timezone;
+// });
 
-Route::view('/inicio', 'home');
+// Route::view('/inicio', 'home');
 
-Route::view('fecha', 'fecha');
-
-
-Route::get('/fecha', function () {
-    // Obtén la fecha actual usando la función date() de PHP
-    $fechaActual = date('Y-m-d');
-
-    // Divide la fecha en componentes de día, mes y año
-    list($anio, $mes, $dia) = explode('-', $fechaActual);
-
-    // Pasa los datos a la vista "fecha.blade.php" como un arreglo asociativo
-    return view('fecha', [
-        'dia' => $dia,
-        'mes' => $mes,
-        'anio' => $anio,
-    ]);
-});
-
-Route::get('/fechaCompact', function () {
-    // Obtén la fecha actual usando la función date() de PHP
-    $fechaActual = date('Y-m-d');
-
-    // Divide la fecha en componentes de día, mes y año
-    list($anio, $mes, $dia) = explode('-', $fechaActual);
-
-    // Pasa los datos a la vista "fecha.blade.php" utilizando compact
-    return view('fecha', compact('dia', 'mes', 'anio'));
-});
-
-Route::get('/fechaWith', function () {
-
-    $fechaActual = date('Y-m-d');
+// Route::view('fecha', 'fecha');
 
 
-    list($anio, $mes, $dia) = explode('-', $fechaActual);
+// Route::get('/fecha', function () {
+//     // Obtén la fecha actual usando la función date() de PHP
+//     $fechaActual = date('Y-m-d');
+
+//     // Divide la fecha en componentes de día, mes y año
+//     list($anio, $mes, $dia) = explode('-', $fechaActual);
+
+//     // Pasa los datos a la vista "fecha.blade.php" como un arreglo asociativo
+//     return view('fecha', [
+//         'dia' => $dia,
+//         'mes' => $mes,
+//         'anio' => $anio,
+//     ]);
+// });
+
+// Route::get('/fechaCompact', function () {
+//     // Obtén la fecha actual usando la función date() de PHP
+//     $fechaActual = date('Y-m-d');
+
+//     // Divide la fecha en componentes de día, mes y año
+//     list($anio, $mes, $dia) = explode('-', $fechaActual);
+
+//     // Pasa los datos a la vista "fecha.blade.php" utilizando compact
+//     return view('fecha', compact('dia', 'mes', 'anio'));
+// });
+
+// Route::get('/fechaWith', function () {
+
+//     $fechaActual = date('Y-m-d');
 
 
-    return view('fecha')->with('dia', $dia)->with('mes', $mes)->with('anio', $anio); //tienen que llamarse igual
-});
+//     list($anio, $mes, $dia) = explode('-', $fechaActual);
 
-Route::get('/imagen', function () {
-    return view('imagen');
-});
+
+//     return view('fecha')->with('dia', $dia)->with('mes', $mes)->with('anio', $anio); //tienen que llamarse igual
+// });
+
+// Route::get('/imagen', function () {
+//     return view('imagen');
+// });
 
 Route::get('community', [App\Http\Controllers\CommunityLinkController::class, 'index']);
 
 Route::post('community', [App\Http\Controllers\CommunityLinkController::class, 'store'])
     ->middleware('auth');
 
-Route::get('/returnresponse', function () {
-    return response('Error', 404)
-        ->header('Content-Type', 'text/plain');
-});
+// Route::get('/returnresponse', function () {
+//     return response('Error', 404)
+//         ->header('Content-Type', 'text/plain');
+// });
 Route::get('community/{channel:slug}', [App\Http\Controllers\CommunityLinkController::class, 'index']);
+
+Route::post('votes/{link}', [App\Http\Controllers\CommunityLinkUserController::class, 'store']);
