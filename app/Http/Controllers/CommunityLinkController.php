@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\CommunityLink;
+use App\Queries\CommunityLinksQuery;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Channel;
@@ -16,17 +17,27 @@ class CommunityLinkController extends Controller
      */
     public function index(Channel $channel = null)
     {
-        // Si se proporciona un canal en la URL, filtra los enlaces por ese canal; de lo contrario, muestra todos los canales.
-        if ($channel) {
-            $links = CommunityLink::where('channel_id', $channel->id)->where('approved', 1)->latest('updated_at')->paginate(25);
+
+
+        $query = new CommunityLinksQuery;
+
+
+        if (request()->exists('popular')) {
+            $links = $query->getMostPopular();
         } else {
-            $links = CommunityLink::where('approved', 1)->latest('updated_at')->paginate(25);
+            if ($channel == null) {
+                $links = $query->getAll();
+            } else {
+                $links = $query->getByChannel($channel);
+            }
         }
 
-        // Obtenemos la lista de todos los canales
         $channels = Channel::orderBy('title', 'asc')->get();
 
-        return view('community/index', compact('links', 'channels'));
+        return view('community/index', compact('links', 'channels', 'channel'));
+
+        // Obtenemos la lista de todos los canales
+
     }
 
     /**

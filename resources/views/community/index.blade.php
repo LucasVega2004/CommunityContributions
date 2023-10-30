@@ -20,6 +20,16 @@
                         <h1>Listado de Links</h1>
                     @endif
                     <h3><a class="text-decoration-none" href="http://communitycontributions.test/community">Community</a></h3>
+                    <ul class="nav">
+                        <li class="nav-item">
+                            <a class="nav-link {{ request()->exists('popular') ? '' : 'disabled' }}"
+                                href="{{ request()->url() }}">Most recent</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link {{ request()->exists('popular') ? 'disabled' : '' }}" href="?popular">Most
+                                popular</a>
+                        </li>
+                    </ul>
                     @foreach ($links as $link)
                         <li id="linkli">
                             <a class="text-decoration-none" href="/community/{{ $link->channel->slug }}">
