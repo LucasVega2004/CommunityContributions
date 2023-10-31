@@ -2,7 +2,7 @@
 
 <head>
     <link rel="stylesheet" type="text/css" href="{{ asset('./css/style.css') }}">
-</head>
+</head> 
 
 @section('content')
     <div class="container">
@@ -51,6 +51,7 @@
                                 class="btn btn-secondary {{ Auth::check() && Auth::user()->votedFor($link) ? 'btn-success' : 'btn-secondary' }}"
                                 {{ Auth::guest() ? 'disabled' : '' }}>
                                 {{ $link->users()->count() }}
+                                <i class="fa-regular fa-thumbs-up"></i>
                             </button>
                         </form>
                     @endforeach

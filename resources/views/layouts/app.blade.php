@@ -15,6 +15,8 @@
     <link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet">
 
     <link rel="stylesheet" type="text/css" href="{{ asset('./css/style.css') }}">
+    <script src="https://kit.fontawesome.com/deb6c0cab8.js" crossorigin="anonymous"></script>
+
 
     <!-- Scripts -->
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
@@ -41,6 +43,17 @@
 
                     <!-- Right Side Of Navbar -->
                     <ul class="navbar-nav ms-auto">
+                        <!-- barra de busqueda -->
+                        <li class="nav-item">
+                            <form action="/community/" method="get" class="row">
+                                <div class="col-auto">
+                                    <input type="text" name="search" class="form-control" placeholder="Buscar...">
+                                </div>
+                                <div class="col-auto">
+                                    <button type="search" class="btn btn-primary">Search</button>
+                                </div>
+                            </form>
+                        </li>
                         <!-- Authentication Links -->
                         @guest
                             @if (Route::has('login'))
