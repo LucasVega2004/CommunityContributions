@@ -68,22 +68,31 @@
                                 </li>
                             @endif
                         @else
+                        
+                        <img src="{{ url('storage/' . Auth::user()->profile->imageUpload) }}" alt="" width="50px" style="padding-left: 5px">
+
                             <li class="nav-item dropdown">
+
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button"
                                     data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                     {{ Auth::user()->name }}
                                 </a>
 
                                 <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item" href="{{ route('logout') }}"
+                                    <a class="dropdown-item" onmouseover="this.style.backgroundColor='lightgray'"
+                                        onmouseout="this.style.backgroundColor='white'" href="{{ route('logout') }}"
                                         onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
                                         {{ __('Logout') }}
                                     </a>
+                                    <a href="{{ route('profile/edit') }}" class="dropdown-item"
+                                        onmouseover="this.style.backgroundColor='lightgray'"
+                                        onmouseout="this.style.backgroundColor='white'">Edit Profile</a>
 
                                     <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                                         @csrf
                                     </form>
+
                                 </div>
                             </li>
                         @endguest
