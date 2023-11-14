@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Profiles;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Intervention\Image\Facades\Image;
+
 
 class ProfilesController extends Controller
 {
@@ -33,8 +35,11 @@ class ProfilesController extends Controller
     {
         //
         $request->validate([
-            'imageUpload' => 'file|image|max:200'
+            'imageUpload' => 'file|image|'
         ]);
+
+
+
 
         if ($request->imageUpload) {
             $path = $request->file('imageUpload')->store('images', 'public');
@@ -42,6 +47,17 @@ class ProfilesController extends Controller
                 ['user_id' => Auth::id()],
                 ['imageUpload' => $path]
             );
+            $requestImage = $request->file('imageUpload');
+            $img = Image::make($requestImage);
+
+            $img->resize(null, 400, function ($constraint) {
+                $constraint->aspectRatio();
+                $constraint->upsize();
+            });
+
+            $name = $requestImage->hashName();
+            $path = config('filesystems.disks.public.root') . '/images/' . $name;
+            $img->save($path);
 
             return back()->with('success', 'Imagen subida correctamente');
         } else {

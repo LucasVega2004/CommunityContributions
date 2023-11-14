@@ -35,4 +35,9 @@ class CommunityLinksQuery
         $query = CommunityLink::where('approved', true)->withCount('users')->orderBy('users_count', 'desc')->paginate(25);
         return $query;
     }
+    public function getByChannelAndUrl(Channel $channel, $url)
+    {
+        $query = $channel->CommunityLinks()->where('approved', true)->where('url', $url)->latest('updated_at')->paginate(25);
+        return $query;
+    }
 }

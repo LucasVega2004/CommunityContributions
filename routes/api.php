@@ -1,7 +1,10 @@
 <?php
 
+use App\Http\Controllers\Api\V1\CommunityLinkController;
+use App\Http\Controllers\Api\V1\LoginController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -14,6 +17,15 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
+// Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+//     return $request->user();
+// });
+
+
+Route::apiResource('v1/communitylinks', CommunityLinkController::class)->middleware('api');
+
+Route::post('v1/login', [LoginController::class,"login"])->middleware('api');
+
+Route::post('v1/show', [CommunityLinkController::class,"show"])->middleware('api');
+
+Route::post('v1/destroy', [CommunityLinkController::class,"destroy"])->middleware('api');

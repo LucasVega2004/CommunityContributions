@@ -2,7 +2,10 @@
 
 @section('content')
     <div class="container">
-        <img src="{{ url('storage/' . Auth::user()->profile->imageUpload) }}" alt="" width="150px">
+        @if (Auth::user()->profile != null)
+            <img src="{{ url('storage/' . Auth::user()->profile->imageUpload) }}" alt="imagen ususario"
+                style="height: 50px;width:50px">
+        @endif
         <form action="/profile/store" method="POST" id="updateImage" enctype="multipart/form-data">
             @csrf
             <div class="form-group">
